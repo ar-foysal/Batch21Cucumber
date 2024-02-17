@@ -19,16 +19,6 @@ public class LoginStep {
         getBrowser().get(loginPage.loginPageURL);
     }
 
-    @And("User enter username on the username filed")
-    public void userEnterUsernameOnTheUsernameFiled() {
-        loginPage.writeOnAElement(loginPage.emailInputBox, "standard_user");
-    }
-
-    @And("User enter password on the password filed")
-    public void userEnterPasswordOnThePasswordFiled() {
-        loginPage.writeOnAElement(loginPage.passwordInputBox, "secret_sauce");
-    }
-
     @When("User click on the login button")
     public void userClickOnTheLoginButton() {
         loginPage.clickOnElement(loginPage.loginButton);
@@ -37,5 +27,21 @@ public class LoginStep {
     @Then("User should navigate to product page")
     public void userShouldNavigateToProductPage() {
         Assert.assertEquals(getBrowser().getCurrentUrl(), productPage.productPageURL);
+    }
+
+    @And("User enter {string} on the username filed")
+    public void userEnterOnTheUsernameFiled(String arg0) {
+        loginPage.writeOnAElement(loginPage.emailInputBox, arg0);
+    }
+
+    @And("User enter {string} on the password filed")
+    public void userEnterOnThePasswordFiled(String arg0) {
+        loginPage.writeOnAElement(loginPage.passwordInputBox, arg0);
+    }
+
+    @Then("User should see {string} error message")
+    public void userShouldSeeErrorMessage(String arg0) {
+        Assert.assertTrue(loginPage.getElement(loginPage.errorMsg).isDisplayed());
+        Assert.assertEquals(loginPage.getElementText(loginPage.errorMsg), arg0);
     }
 }
